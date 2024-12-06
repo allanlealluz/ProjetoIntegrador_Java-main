@@ -60,12 +60,12 @@ public class Cadastro {
                             System.out.print("Digite o nome do funcionário: ");
                             String nomeFunc = scanner.nextLine();
                             System.out.print("Digite a matrícula do funcionário: ");
-                            String matriculaFunc = scanner.nextLine();
+                            String NitFunc = scanner.nextLine();
                             System.out.print("Digite o cargo do funcionário: ");
                             String cargoFunc = scanner.nextLine();
 
                             funcionarios[numFuncionarios][0] = nomeFunc;
-                            funcionarios[numFuncionarios][1] = matriculaFunc;
+                            funcionarios[numFuncionarios][1] = NitFunc;
                             funcionarios[numFuncionarios][2] = cargoFunc;
                             numFuncionarios++;
 
