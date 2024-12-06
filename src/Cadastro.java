@@ -1,20 +1,20 @@
 import java.util.Scanner;
 
-public class Main {
+public class Cadastro {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Quantos alunos deseja cadastrar? ");
-        int MAX_ALUNOS = scanner.nextInt();
+        int maxAlunos = scanner.nextInt();
         scanner.nextLine();
 
         System.out.print("Quantos funcionários deseja cadastrar? ");
-        int MAX_FUNCIONARIOS = scanner.nextInt();
+        int maxFun = scanner.nextInt();
         scanner.nextLine();
 
-        String[][] alunos = new String[MAX_ALUNOS][2];
-        String[][] funcionarios = new String[MAX_FUNCIONARIOS][3];
+        String[][] alunos = new String[maxAlunos][2];
+        String[][] funcionarios = new String[maxFun][3];
 
         int numAlunos = 0;
         int numFuncionarios = 0;
@@ -40,7 +40,7 @@ public class Main {
                     scanner.nextLine();
 
                     if (tipoCadastro == 1) {
-                        if (numAlunos < MAX_ALUNOS) {
+                        if (numAlunos < maxAlunos) {
                             System.out.print("Digite o nome do aluno: ");
                             String nomeAluno = scanner.nextLine();
                             System.out.print("Digite a matrícula do aluno: ");
@@ -52,10 +52,11 @@ public class Main {
 
                             System.out.println("Aluno cadastrado com sucesso!");
                         } else {
-                            System.out.println("Número máximo de alunos atingido!");
+                            
+                            System.out.println("Número máximo de alunos atingido! ");
                         }
                     } else if (tipoCadastro == 2) {
-                        if (numFuncionarios < MAX_FUNCIONARIOS) {
+                        if (numFuncionarios < maxFun) {
                             System.out.print("Digite o nome do funcionário: ");
                             String nomeFunc = scanner.nextLine();
                             System.out.print("Digite a matrícula do funcionário: ");

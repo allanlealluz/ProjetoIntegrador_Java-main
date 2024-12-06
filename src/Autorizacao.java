@@ -5,8 +5,8 @@ public class Autorizacao {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int MAX_USUARIOS = 5;
-        String[][] usuarios = new String[MAX_USUARIOS][2];
+        int maxUsuarios = 5;
+        String[][] usuarios = new String[maxUsuarios][2];
 
         usuarios[0][0] = "João";
         usuarios[0][1] = "12345";
