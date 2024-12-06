@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.time.LocalTime;
 
 public class Autorizacao {
 
@@ -39,6 +40,7 @@ public class Autorizacao {
 
                     if (validarAutorizacao(matriculaTag, usuarios)) {
                         System.out.println("Acesso autorizado!");
+                        verificarAtraso();
                     } else {
                         System.out.println("Acesso negado! Matrícula não autorizada.");
                     }
@@ -58,10 +60,19 @@ public class Autorizacao {
 
     public static boolean validarAutorizacao(String matriculaTag, String[][] usuarios) {
         for (int i = 0; i < usuarios.length; i++) {
-            if (usuarios[i][1] != null && usuarios[i][1].equals(matriculaTag)) {
+            if (usuarios[i][1].equals(matriculaTag)) {
                 return true;
             }
         }
         return false;
+    }
+    public static void verificarAtraso() {
+        LocalTime limite = LocalTime.of(8, 15);
+        LocalTime horarioAtual = LocalTime.now();
+        if (horarioAtual.isAfter(limite)) {
+            System.out.println("Você está atrasado! O horário limite era 08:15.");
+        } else {
+            System.out.println("Você não está atrasado.");
+        }
     }
 }
