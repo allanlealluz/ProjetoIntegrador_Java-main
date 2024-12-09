@@ -35,20 +35,20 @@ public class Cadastro {
 
                     if (tipoCadastro == 1) {
                         String idAluno = String.valueOf(proximoIdAluno++);
-                        System.out.print("Digite a matrícula do aluno: ");
-                        String matriculaAluno = scanner.nextLine();
                         System.out.print("Digite o nome do aluno: ");
                         String nomeAluno = scanner.nextLine();
+                        System.out.print("Digite a matrícula do aluno: ");
+                        String matriculaAluno = scanner.nextLine();
                         salvarAluno(idAluno, matriculaAluno, nomeAluno, caminhoAlunos);
                         System.out.println("Aluno cadastrado com sucesso!");
                     } else if (tipoCadastro == 2) {
                         String idFunc = String.valueOf(proximoIdFuncionario++);
+                        System.out.print("Digite o nome do funcionário: ");
+                        String nomeFunc = scanner.nextLine();
                         System.out.print("Digite a matrícula (NIT) do funcionário: ");
                         String nitFunc = scanner.nextLine();
                         System.out.print("Digite o cargo do funcionário: ");
                         String cargoFunc = scanner.nextLine();
-                        System.out.print("Digite o nome do funcionário: ");
-                        String nomeFunc = scanner.nextLine();
                         salvarFuncionario(idFunc, nitFunc, cargoFunc, nomeFunc, caminhoFuncionarios);
                         System.out.println("Funcionário cadastrado com sucesso!");
                     } else {
