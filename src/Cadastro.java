@@ -1,23 +1,17 @@
+import java.io.*;
 import java.util.Scanner;
 
 public class Cadastro {
 
+    private static int proximoIdAluno = 1;
+    private static int proximoIdFuncionario = 1;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String caminhoAlunos = "alunos.txt";
+        String caminhoFuncionarios = "funcionarios.txt";
 
-        System.out.print("Quantos alunos deseja cadastrar? ");
-        int maxAlunos = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Quantos funcionários deseja cadastrar? ");
-        int maxFun = scanner.nextInt();
-        scanner.nextLine();
-
-        String[][] alunos = new String[maxAlunos][2];
-        String[][] funcionarios = new String[maxFun][3];
-
-        int numAlunos = 0;
-        int numFuncionarios = 0;
+        carregarUltimosIds(caminhoAlunos, caminhoFuncionarios);
 
         int opcao;
         do {
@@ -40,39 +34,23 @@ public class Cadastro {
                     scanner.nextLine();
 
                     if (tipoCadastro == 1) {
-                        if (numAlunos < maxAlunos) {
-                            System.out.print("Digite o nome do aluno: ");
-                            String nomeAluno = scanner.nextLine();
-                            System.out.print("Digite a matrícula do aluno: ");
-                            String matriculaAluno = scanner.nextLine();
-
-                            alunos[numAlunos][0] = nomeAluno;
-                            alunos[numAlunos][1] = matriculaAluno;
-                            numAlunos++;
-
-                            System.out.println("Aluno cadastrado com sucesso!");
-                        } else {
-                            
-                            System.out.println("Número máximo de alunos atingido! ");
-                        }
+                        String idAluno = String.valueOf(proximoIdAluno++);
+                        System.out.print("Digite a matrícula do aluno: ");
+                        String matriculaAluno = scanner.nextLine();
+                        System.out.print("Digite o nome do aluno: ");
+                        String nomeAluno = scanner.nextLine();
+                        salvarAluno(idAluno, matriculaAluno, nomeAluno, caminhoAlunos);
+                        System.out.println("Aluno cadastrado com sucesso!");
                     } else if (tipoCadastro == 2) {
-                        if (numFuncionarios < maxFun) {
-                            System.out.print("Digite o nome do funcionário: ");
-                            String nomeFunc = scanner.nextLine();
-                            System.out.print("Digite a matrícula do funcionário: ");
-                            String NitFunc = scanner.nextLine();
-                            System.out.print("Digite o cargo do funcionário: ");
-                            String cargoFunc = scanner.nextLine();
-
-                            funcionarios[numFuncionarios][0] = nomeFunc;
-                            funcionarios[numFuncionarios][1] = NitFunc;
-                            funcionarios[numFuncionarios][2] = cargoFunc;
-                            numFuncionarios++;
-
-                            System.out.println("Funcionário cadastrado com sucesso!");
-                        } else {
-                            System.out.println("Número máximo de funcionários atingido!");
-                        }
+                        String idFunc = String.valueOf(proximoIdFuncionario++);
+                        System.out.print("Digite a matrícula (NIT) do funcionário: ");
+                        String nitFunc = scanner.nextLine();
+                        System.out.print("Digite o cargo do funcionário: ");
+                        String cargoFunc = scanner.nextLine();
+                        System.out.print("Digite o nome do funcionário: ");
+                        String nomeFunc = scanner.nextLine();
+                        salvarFuncionario(idFunc, nitFunc, cargoFunc, nomeFunc, caminhoFuncionarios);
+                        System.out.println("Funcionário cadastrado com sucesso!");
                     } else {
                         System.out.println("Opção inválida.");
                     }
@@ -87,89 +65,13 @@ public class Cadastro {
                     scanner.nextLine();
 
                     if (tipoBusca == 1) {
-                        System.out.println("1. Buscar por nome");
-                        System.out.println("2. Buscar por matrícula");
-                        System.out.print("Escolha uma opção: ");
-                        int tipoBuscaAluno = scanner.nextInt();
-                        scanner.nextLine();
-
-                        if (tipoBuscaAluno == 1) {
-                            System.out.print("Digite o nome do aluno para busca: ");
-                            String nomeBuscaAluno = scanner.nextLine();
-                            boolean encontradoPorNomeAluno = false;
-
-                            for (int i = 0; i < numAlunos; i++) {
-                                if (alunos[i][0].equalsIgnoreCase(nomeBuscaAluno)) {
-                                    System.out.println("Aluno encontrado: Nome: " + alunos[i][0] + ", Matrícula: " + alunos[i][1]);
-                                    encontradoPorNomeAluno = true;
-                                    break;
-                                }
-                            }
-
-                            if (!encontradoPorNomeAluno) {
-                                System.out.println("Aluno não encontrado com esse nome.");
-                            }
-                        } else if (tipoBuscaAluno == 2) {
-                            System.out.print("Digite a matrícula do aluno para busca: ");
-                            String matriculaBuscaAluno = scanner.nextLine();
-                            boolean encontradoPorMatriculaAluno = false;
-
-                            for (int i = 0; i < numAlunos; i++) {
-                                if (alunos[i][1].equals(matriculaBuscaAluno)) {
-                                    System.out.println("Aluno encontrado: Nome: " + alunos[i][0] + ", Matrícula: " + alunos[i][1]);
-                                    encontradoPorMatriculaAluno = true;
-                                    break;
-                                }
-                            }
-
-                            if (!encontradoPorMatriculaAluno) {
-                                System.out.println("Aluno não encontrado com essa matrícula.");
-                            }
-                        } else {
-                            System.out.println("Opção inválida.");
-                        }
+                        System.out.print("Digite o ID ou a matrícula do aluno: ");
+                        String buscaAluno = scanner.nextLine();
+                        buscarAluno(buscaAluno, caminhoAlunos);
                     } else if (tipoBusca == 2) {
-                        System.out.println("1. Buscar por nome");
-                        System.out.println("2. Buscar por matrícula");
-                        System.out.print("Escolha uma opção: ");
-                        int tipoBuscaFuncionario = scanner.nextInt();
-                        scanner.nextLine();
-
-                        if (tipoBuscaFuncionario == 1) {
-                            System.out.print("Digite o nome do funcionário para busca: ");
-                            String nomeBuscaFunc = scanner.nextLine();
-                            boolean encontradoPorNomeFunc = false;
-
-                            for (int i = 0; i < numFuncionarios; i++) {
-                                if (funcionarios[i][0].equalsIgnoreCase(nomeBuscaFunc)) {
-                                    System.out.println("Funcionário encontrado: Nome: " + funcionarios[i][0] + ", Matrícula: " + funcionarios[i][1] + ", Cargo: " + funcionarios[i][2]);
-                                    encontradoPorNomeFunc = true;
-                                    break;
-                                }
-                            }
-
-                            if (!encontradoPorNomeFunc) {
-                                System.out.println("Funcionário não encontrado com esse nome.");
-                            }
-                        } else if (tipoBuscaFuncionario == 2) {
-                            System.out.print("Digite a matrícula do funcionário para busca: ");
-                            String matriculaBuscaFunc = scanner.nextLine();
-                            boolean encontradoPorMatriculaFunc = false;
-
-                            for (int i = 0; i < numFuncionarios; i++) {
-                                if (funcionarios[i][1].equals(matriculaBuscaFunc)) {
-                                    System.out.println("Funcionário encontrado: Nome: " + funcionarios[i][0] + ", Matrícula: " + funcionarios[i][1] + ", Cargo: " + funcionarios[i][2]);
-                                    encontradoPorMatriculaFunc = true;
-                                    break;
-                                }
-                            }
-
-                            if (!encontradoPorMatriculaFunc) {
-                                System.out.println("Funcionário não encontrado com essa matrícula.");
-                            }
-                        } else {
-                            System.out.println("Opção inválida.");
-                        }
+                        System.out.print("Digite o ID ou a matrícula do funcionário: ");
+                        String buscaFuncionario = scanner.nextLine();
+                        buscarFuncionario(buscaFuncionario, caminhoFuncionarios);
                     } else {
                         System.out.println("Opção inválida.");
                     }
@@ -180,31 +82,13 @@ public class Cadastro {
                     System.out.println("1. Alunos");
                     System.out.println("2. Funcionários");
                     System.out.print("Escolha uma opção: ");
-                    int tipoListagem = scanner.nextInt();
+                    int tipoLista = scanner.nextInt();
                     scanner.nextLine();
 
-                    if (tipoListagem == 1) {
-                        if (numAlunos > 0) {
-                            System.out.println("\n--- Lista de Todos os Alunos ---");
-                            System.out.printf("%-20s %-15s\n", "Nome", "Matrícula");
-                            System.out.println("----------------------------------");
-                            for (int i = 0; i < numAlunos; i++) {
-                                System.out.printf("%-20s %-15s\n", alunos[i][0], alunos[i][1]);
-                            }
-                        } else {
-                            System.out.println("Nenhum aluno cadastrado.");
-                        }
-                    } else if (tipoListagem == 2) {
-                        if (numFuncionarios > 0) {
-                            System.out.println("\n--- Lista de Todos os Funcionários ---");
-                            System.out.printf("%-20s %-15s %-20s\n", "Nome", "Matrícula", "Cargo");
-                            System.out.println("--------------------------------------------");
-                            for (int i = 0; i < numFuncionarios; i++) {
-                                System.out.printf("%-20s %-15s %-20s\n", funcionarios[i][0], funcionarios[i][1], funcionarios[i][2]);
-                            }
-                        } else {
-                            System.out.println("Nenhum funcionário cadastrado.");
-                        }
+                    if (tipoLista == 1) {
+                        listarAlunos(caminhoAlunos);
+                    } else if (tipoLista == 2) {
+                        listarFuncionarios(caminhoFuncionarios);
                     } else {
                         System.out.println("Opção inválida.");
                     }
@@ -220,5 +104,122 @@ public class Cadastro {
         } while (opcao != 4);
 
         scanner.close();
+    }
+
+    private static void carregarUltimosIds(String caminhoAlunos, String caminhoFuncionarios) {
+        proximoIdAluno = carregarUltimoId(caminhoAlunos);
+        proximoIdFuncionario = carregarUltimoId(caminhoFuncionarios);
+    }
+
+    private static int carregarUltimoId(String caminho) {
+        int ultimoId = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                if (dados.length > 0) {
+                    int idAtual = Integer.parseInt(dados[0]);
+                    if (idAtual > ultimoId) {
+                        ultimoId = idAtual;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Arquivo não encontrado: " + caminho);
+        }
+        return ultimoId + 1;
+    }
+
+    private static void salvarAluno(String id, String matricula, String nome, String caminho) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminho, true))) {
+            bw.write(id + ";" + matricula + ";" + nome);
+            bw.newLine();
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar aluno: " + e.getMessage());
+        }
+    }
+
+    private static void salvarFuncionario(String id, String nit, String cargo, String nome, String caminho) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(caminho, true))) {
+            bw.write(id + ";" + nit + ";" + cargo + ";" + nome);
+            bw.newLine();
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar funcionário: " + e.getMessage());
+        }
+    }
+
+    private static void buscarAluno(String busca, String caminho) {
+        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+            String linha;
+            boolean encontrado = false;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                if (dados[0].equals(busca) || dados[1].equals(busca)) {
+                    System.out.println("Aluno encontrado:");
+                    System.out.println("ID: " + dados[0]);
+                    System.out.println("Matrícula: " + dados[1]);
+                    System.out.println("Nome: " + dados[2]);
+                    encontrado = true;
+                }
+            }
+            if (!encontrado) {
+                System.out.println("Aluno não encontrado.");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao buscar aluno: " + e.getMessage());
+        }
+    }
+
+    private static void buscarFuncionario(String busca, String caminho) {
+        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+            String linha;
+            boolean encontrado = false;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                if (dados[0].equals(busca) || dados[1].equals(busca)) {
+                    System.out.println("Funcionário encontrado:");
+                    System.out.println("ID: " + dados[0]);
+                    System.out.println("Matrícula (NIT): " + dados[1]);
+                    System.out.println("Cargo: " + dados[2]);
+                    System.out.println("Nome: " + dados[3]);
+                    encontrado = true;
+                }
+            }
+            if (!encontrado) {
+                System.out.println("Funcionário não encontrado.");
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao buscar funcionário: " + e.getMessage());
+        }
+    }
+
+    private static void listarAlunos(String caminho) {
+        System.out.println("\n--- Lista de Alunos ---");
+        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                if (dados.length == 3) {
+                    System.out.println("ID: " + dados[0] + " | Matrícula: " + dados[1] + " | Nome: " + dados[2]);
+                } else {
+                    System.out.println("Linha inválida: " + linha);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao listar alunos: " + e.getMessage());
+        }
+    }
+
+    private static void listarFuncionarios(String caminho) {
+        System.out.println("\n--- Lista de Funcionários ---");
+        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                System.out.println("ID: " + dados[0] + " | Matrícula (NIT): " + dados[1] + " | Cargo: " + dados[2] + " | Nome: " + dados[3]);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao listar funcionários: " + e.getMessage());
+        }
     }
 }
