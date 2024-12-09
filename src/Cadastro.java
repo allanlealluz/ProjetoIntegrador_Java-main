@@ -8,8 +8,8 @@ public class Cadastro {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String caminhoAlunos = "alunos.txt";
-        String caminhoFuncionarios = "funcionarios.txt";
+        String caminhoAlunos = "src/alunos.txt";
+        String caminhoFuncionarios = "src/funcionarios.txt";
 
         carregarUltimosIds(caminhoAlunos, caminhoFuncionarios);
 
